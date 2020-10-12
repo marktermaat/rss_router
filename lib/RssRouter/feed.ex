@@ -24,6 +24,7 @@ defmodule RssRouter.Feed do
 
   defp process_feed(uri) do
     IO.puts("Processing feed #{uri}")
+    RssRouter.FeedProcessor.process_feed(uri)
     schedule_processing()
   end
 

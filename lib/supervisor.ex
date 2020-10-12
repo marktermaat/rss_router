@@ -1,16 +1,20 @@
 defmodule RssRouter.Supervisor do
-  use Supervisor
+  use DynamicSupervisor
 
   def start_link(init_arg) do
-    Supervisor.start_link(__MODULE__, init_arg, name: __MODULE__)
+    DynamicSupervisor.start_link(__MODULE__, init_arg, name: __MODULE__)
   end
 
   @impl true
   def init(_init_arg) do
-    children = [
-      {RssRouter.Feed, "rss://test"}
-    ]
+    sup = DynamicSupervisor.init(strategy: :one_for_one)
+    # start_initial_feeds()
+    sup
+  end
 
-    Supervisor.init(children, strategy: :one_for_one)
+  def start_initial_feeds() do
+    RssRouter.FeedStore.get_feeds()
+    |> Enum.map(fn feed -> {RssRouter.Feed, feed} end)
+    |> Enum.each(fn child -> DynamicSupervisor.start_child(RssRouter.Supervisor, child) end)
   end
 end

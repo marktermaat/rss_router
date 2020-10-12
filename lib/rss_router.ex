@@ -7,10 +7,11 @@ defmodule RssRouter do
 
   def start(_type, _args) do
     children = [
-      RssRouter.Supervisor
+      RssRouter.Supervisor,
+      {Task, &RssRouter.Supervisor.start_initial_feeds/0}
     ]
 
-    Supervisor.start_link(children, strategy: :one_for_one)
+    Supervisor.start_link(children, strategy: :rest_for_one)
   end
 
   # def get_rss_body do

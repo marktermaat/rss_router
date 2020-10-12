@@ -1,9 +1,11 @@
 defmodule RssRouter.Feed do
   use GenServer
 
+  @ten_minutes 600_000
+
   @impl true
   def init(uri) do
-    schedule()
+    process_feed(uri)
     {:ok, [uri]}
   end
 
@@ -11,15 +13,20 @@ defmodule RssRouter.Feed do
     GenServer.start_link(__MODULE__, uri)
   end
 
+  @doc """
+  Process the items of this RSS feed
+  """
   @impl true
-  def handle_info(:process_feed, state) do
-    IO.puts("Working")
-    schedule()
-    {:noreply, state}
+  def handle_info(:process_feed, uri) do
+    process_feed(uri)
+    {:noreply, uri}
   end
 
-  defp schedule() do
-    IO.puts("Scheduling")
-    Process.send_after(self(), :process_feed, 10_000)
+  defp process_feed(uri) do
+    schedule_processing()
+  end
+
+  defp schedule_processing(timeout \\ @ten_minutes) do
+    Process.send_after(self(), :process_feed, timeout)
   end
 end

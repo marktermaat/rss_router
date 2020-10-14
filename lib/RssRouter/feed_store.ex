@@ -1,6 +1,7 @@
 defmodule RssRouter.FeedStore do
   @dets_directory Application.fetch_env!(:rss_router, :data_path)
 
+  @spec get_feeds() :: [String.t()]
   def get_feeds() do
     {:ok, table} = get_or_create_table!()
 
@@ -11,12 +12,40 @@ defmodule RssRouter.FeedStore do
     end
   end
 
+  @spec insert_feed(Strint.t()) :: :ok
   def insert_feed(feed) do
     {:ok, table} = get_or_create_table!()
 
     try do
       feeds = get_feeds(table) ++ [feed]
       :ok = :dets.insert(table, {:feeds, feeds})
+    after
+      close(table)
+    end
+  end
+
+  @spec get_feed_latest_timestamp(String.t()) :: DateTime | :none
+  def get_feed_latest_timestamp(feed_title) do
+    {:ok, table} = get_or_create_table!()
+
+    try do
+      result = :dets.lookup(table, feed_title)
+
+      case result do
+        [{^feed_title, timestamp}] -> timestamp
+        [] -> :none
+      end
+    after
+      close(table)
+    end
+  end
+
+  @spec set_feed_latest_timestamp(String.t(), DateTime) :: :ok
+  def set_feed_latest_timestamp(feed_title, timestamp) do
+    {:ok, table} = get_or_create_table!()
+
+    try do
+      :ok = :dets.insert(table, {feed_title, timestamp})
     after
       close(table)
     end

@@ -1,11 +1,15 @@
 defmodule RssRouter.FeedStore do
-  @dets_file './feed_data'
+  @dets_directory Application.fetch_env!(:rss_router, :data_path)
 
   def get_feeds() do
     {:ok, table} = get_or_create_table!()
-    [feeds: feeds] = :dets.lookup(table, :feeds)
+    result = :dets.lookup(table, :feeds)
     :ok = :dets.close(table)
-    feeds
+
+    case result do
+      [feeds: feeds] -> feeds
+      [] -> []
+    end
   end
 
   def insert_feed(feed) do
@@ -17,6 +21,11 @@ defmodule RssRouter.FeedStore do
   end
 
   defp get_or_create_table!() do
-    :dets.open_file(@dets_file)
+    File.mkdir_p(@dets_directory)
+    :dets.open_file(dets_file(), access: :read_write, type: :set)
+  end
+
+  defp dets_file() do
+    to_charlist(@dets_directory) ++ '/feed_data'
   end
 end

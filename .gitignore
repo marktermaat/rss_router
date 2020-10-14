@@ -28,3 +28,6 @@ rss_router-*.tar
 # VS-code stuff
 /.vscode
 /.elixir_ls
+
+# Application stuff
+/data

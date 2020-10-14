@@ -3,21 +3,32 @@ defmodule RssRouter.FeedStore do
 
   def get_feeds() do
     {:ok, table} = get_or_create_table!()
-    result = :dets.lookup(table, :feeds)
-    :ok = :dets.close(table)
 
-    case result do
-      [feeds: feeds] -> feeds
-      [] -> []
+    try do
+      get_feeds(table)
+    after
+      close(table)
     end
   end
 
   def insert_feed(feed) do
     {:ok, table} = get_or_create_table!()
-    [feeds: feeds] = :dets.lookup(table, :feeds)
-    new_feeds = feeds ++ [feed]
-    :ok = :dets.insert(table, {:feeds, new_feeds})
-    :ok = :dets.close(table)
+
+    try do
+      feeds = get_feeds(table) ++ [feed]
+      :ok = :dets.insert(table, {:feeds, feeds})
+    after
+      close(table)
+    end
+  end
+
+  defp get_feeds(table) do
+    result = :dets.lookup(table, :feeds)
+
+    case result do
+      [feeds: feeds] -> feeds
+      [] -> []
+    end
   end
 
   defp get_or_create_table!() do
@@ -27,5 +38,9 @@ defmodule RssRouter.FeedStore do
 
   defp dets_file() do
     to_charlist(@dets_directory) ++ '/feed_data'
+  end
+
+  defp close(table) do
+    :dets.close(table)
   end
 end

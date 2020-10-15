@@ -22,8 +22,7 @@ defmodule RssRouter.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:feeder_ex, "~> 1.1"},
-      {:httpoison, "~> 1.6"}
+      {:feedex, "~> 0.1.4"}
     ]
   end
 end

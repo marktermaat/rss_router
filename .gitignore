@@ -31,3 +31,4 @@ rss_router-*.tar
 
 # Application stuff
 /data
+/config/*.secret.exs

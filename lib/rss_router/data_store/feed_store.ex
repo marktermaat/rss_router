@@ -51,6 +51,16 @@ defmodule RssRouter.FeedStore do
     end
   end
 
+  def delete_latest_timestamp(feed_title) do
+    {:ok, table} = get_or_create_table!()
+
+    try do
+      :ok = :dets.delete(table, feed_title)
+    after
+      close(table)
+    end
+  end
+
   defp get_feeds(table) do
     result = :dets.lookup(table, :feeds)
 

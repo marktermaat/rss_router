@@ -14,7 +14,7 @@ defmodule RssRouter.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger],
+      extra_applications: [:logger, :pocketeer],
       mod: {RssRouter, []}
     ]
   end
@@ -22,7 +22,8 @@ defmodule RssRouter.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:feedex, "~> 0.1.4"}
+      {:feedex, "~> 0.1.4"},
+      {:pocketeer, "~> 0.1.5"}
     ]
   end
 end

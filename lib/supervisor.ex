@@ -14,7 +14,9 @@ defmodule RssRouter.Supervisor do
 
   def start_initial_feeds() do
     RssRouter.FeedStore.get_feeds()
-    |> Enum.map(fn feed -> {RssRouter.Feed, feed} end)
+    |> Enum.map(fn feed ->
+      {RssRouter.FeedService, %RssRouter.RoutingRule{uri: feed, publisher: :none}}
+    end)
     |> Enum.each(fn child -> DynamicSupervisor.start_child(RssRouter.Supervisor, child) end)
   end
 end

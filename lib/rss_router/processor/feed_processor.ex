@@ -1,6 +1,6 @@
 defmodule RssRouter.FeedProcessor do
-  def process_feed(uri) do
-    feed = get_feed(uri)
+  def process_feed(rule) do
+    feed = get_feed(rule.uri)
 
     get_new_feed_entries(feed)
     |> Enum.each(&process_feed_entry/1)

@@ -5,7 +5,7 @@ defmodule RssRouter.FeedService do
 
   @impl true
   def init(rule) do
-    process_feed(rule)
+    schedule_processing(3_000)
     {:ok, rule}
   end
 
@@ -19,11 +19,13 @@ defmodule RssRouter.FeedService do
   @impl true
   def handle_info(:process_feed, rule) do
     process_feed(rule)
+
     {:noreply, rule}
   end
 
   defp process_feed(rule) do
     RssRouter.FeedProcessor.process_feed(rule)
+
     schedule_processing()
   end
 

@@ -2,6 +2,9 @@ defmodule RssRoutere.PocketHelper do
   @consumer_key Application.fetch_env!(:rss_router, :pocket_consumer_key)
   @access_token Application.fetch_env!(:rss_router, :pocket_access_token)
 
+  @doc """
+  This helper function can be used from a console to generate an access token.
+  """
   def get_access_token() do
     get_access_token(@access_token)
   end

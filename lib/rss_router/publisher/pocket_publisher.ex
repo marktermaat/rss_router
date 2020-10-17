@@ -6,7 +6,14 @@ defmodule RssRouter.PocketPublisher do
 
   @impl RssRouter.Publisher
   def publish(title, uri) do
-    IO.puts("Publishing #{title}: #{uri}")
+    client = %Pocketeer.Client{
+      access_token: @access_token,
+      consumer_key: @consumer_key,
+      site: "https://getpocket.com"
+    }
+
+    {:ok, _item} = Pocketeer.add(client, %{url: uri, title: title})
+
     :ok
   end
 end

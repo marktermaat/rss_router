@@ -8,7 +8,6 @@ defmodule RssRouter.Supervisor do
   @impl true
   def init(_init_arg) do
     sup = DynamicSupervisor.init(strategy: :one_for_one)
-    # start_initial_feeds()
     sup
   end
 

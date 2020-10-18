@@ -1,0 +1,1 @@
+docker build -t rss_router -f docker/Dockerfile .

@@ -1,6 +1,4 @@
 defmodule RssRouter.FeedStore do
-  @dets_directory Application.fetch_env!(:rss_router, :data_path)
-
   @spec get_feeds() :: [String.t()]
   def get_feeds() do
     {:ok, table} = get_or_create_table!()
@@ -71,15 +69,19 @@ defmodule RssRouter.FeedStore do
   end
 
   defp get_or_create_table!() do
-    File.mkdir_p(@dets_directory)
+    File.mkdir_p(data_path())
     :dets.open_file(dets_file(), access: :read_write, type: :set)
   end
 
   defp dets_file() do
-    to_charlist(@dets_directory) ++ '/feed_data'
+    to_charlist(data_path()) ++ '/feed_data'
   end
 
   defp close(table) do
     :dets.close(table)
+  end
+
+  defp data_path() do
+    System.get_env("DATA_PATH") || Application.fetch_env!(:rss_router, :data_path)
   end
 end

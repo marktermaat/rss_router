@@ -23,7 +23,8 @@ defmodule RssRouter.MixProject do
   defp deps do
     [
       {:feedex, "~> 0.1.4"},
-      {:pocketeer, "~> 0.1.5"}
+      {:pocketeer, "~> 0.1.5"},
+      {:logger_file_backend, "~> 0.0.11"}
     ]
   end
 end

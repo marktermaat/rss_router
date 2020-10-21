@@ -1,16 +1,11 @@
 defmodule RssRouter.FeedProcessor do
   def process_feed(rule) do
-    feed = get_feed(rule.uri)
+    feed = RssRouter.FeedReader.read_feed(rule.uri)
 
     get_new_feed_entries(feed)
     |> Enum.each(fn entry -> process_feed_entry(rule, entry) end)
 
     update_latest_timestamp(feed)
-  end
-
-  defp get_feed(uri) do
-    {:ok, feed} = Feedex.fetch_and_parse(uri)
-    feed
   end
 
   defp get_new_feed_entries(feed) do
@@ -36,6 +31,7 @@ defmodule RssRouter.FeedProcessor do
   end
 
   defp process_feed_entry(rule, entry) do
+    IO.puts("#{entry.title} / #{entry.url}")
     rule.publisher.publish(entry.title, entry.url)
   end
 end

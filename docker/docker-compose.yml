@@ -1,0 +1,17 @@
+version: '3.5'
+
+services:
+
+   rss_router:
+    image: "marktermaat/rss_router:latest"
+    container_name: rss_router
+    volumes:
+      - "./log:/log"
+      - "./data:/data"
+    restart: always
+    environment:
+      POCKET_CONSUMER_KEY: "KEY"
+      POCKET_ACCESS_KEY: "KEY"
+      LOG_PATH: "/log"
+      DATA_PATH: "/data"
+      FEEDS: "https://feed1.com/rss https://feed2.com/rss"

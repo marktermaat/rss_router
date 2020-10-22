@@ -74,7 +74,7 @@ defmodule RssRouter.FeedStore do
   end
 
   defp dets_file() do
-    to_charlist(data_path()) ++ '/feed_data'
+    to_charlist(RssRouter.Config.data_path()) ++ '/feed_data'
   end
 
   defp close(table) do

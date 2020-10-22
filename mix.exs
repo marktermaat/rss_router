@@ -25,7 +25,10 @@ defmodule RssRouter.MixProject do
       {:feedex, "~> 0.1.4"},
       {:pocketeer, "~> 0.1.5"},
       {:poison, "~> 3.0"},
-      {:logger_file_backend, "~> 0.0.11"}
+      {:logger_file_backend, "~> 0.0.11"},
+      {:jason, "~> 1.2.2"},
+      {:phoenix, "~> 1.5"},
+      {:plug_cowboy, "~> 2.4"}
     ]
   end
 end

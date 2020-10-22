@@ -12,6 +12,8 @@ defmodule RssRouter.Supervisor do
   end
 
   def start_initial_feeds() do
+    IO.puts("Seeding initial feeds")
+
     get_initial_feeds()
     |> Enum.map(fn feed ->
       {RssRouter.FeedService,

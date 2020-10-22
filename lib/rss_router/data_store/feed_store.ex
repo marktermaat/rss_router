@@ -69,7 +69,7 @@ defmodule RssRouter.FeedStore do
   end
 
   defp get_or_create_table!() do
-    File.mkdir_p(data_path())
+    File.mkdir_p(RssRouter.Config.data_path())
     :dets.open_file(dets_file(), access: :read_write, type: :set)
   end
 
@@ -79,9 +79,5 @@ defmodule RssRouter.FeedStore do
 
   defp close(table) do
     :dets.close(table)
-  end
-
-  defp data_path() do
-    System.get_env("DATA_PATH") || Application.fetch_env!(:rss_router, :data_path)
   end
 end

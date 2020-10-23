@@ -15,7 +15,7 @@ defmodule RssRouter.FeedStore do
     {:ok, table} = get_or_create_table!()
 
     try do
-      feeds = get_feeds(table) ++ [feed]
+      feeds = Enum.uniq(get_feeds(table) ++ [feed])
       :ok = :dets.insert(table, {:feeds, feeds})
     after
       close(table)

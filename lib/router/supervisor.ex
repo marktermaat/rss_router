@@ -19,13 +19,19 @@ defmodule RssRouter.Router.Supervisor do
       {RssRouter.Router.FeedService,
        %RssRouter.Router.RoutingRule{uri: feed, publisher: RssRouter.Router.PocketPublisher}}
     end)
-    |> Enum.each(fn child -> DynamicSupervisor.start_child(Router.Supervisor, child) end)
+    |> Enum.each(fn child -> DynamicSupervisor.start_child(RssRouter.Router.Supervisor, child) end)
   end
 
   defp get_initial_feeds() do
+    store_initial_feeds()
+
+    RssRouter.FeedStore.get_feeds()
+  end
+
+  defp store_initial_feeds() do
     RssRouter.Config.initial_feeds()
     |> String.split(" ")
-    |> Enum.concat(RssRouter.FeedStore.get_feeds())
     |> Enum.reject(fn f -> String.length(f) == 0 end)
+    |> Enum.each(&RssRouter.FeedStore.insert_feed/1)
   end
 end

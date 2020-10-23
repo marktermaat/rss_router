@@ -1,4 +1,4 @@
-defmodule RssRouter.PocketHelper do
+defmodule RssRouter.Router.PocketHelper do
   @consumer_key Application.fetch_env!(:rss_router, :pocket_consumer_key)
   @access_token Application.fetch_env!(:rss_router, :pocket_access_token)
 

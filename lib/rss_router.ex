@@ -1,11 +1,13 @@
 defmodule RssRouter do
   use Application
 
+  alias RssRouter.Router.Supervisor, as: RouterSupervisor
+
   def start(_type, _args) do
     children = [
-      RssRouter.Supervisor,
+      RouterSupervisor,
       RssRouter.Web.Endpoint,
-      {Task, &RssRouter.Supervisor.start_initial_feeds/0}
+      {Task, &RouterSupervisor.start_initial_feeds/0}
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one)

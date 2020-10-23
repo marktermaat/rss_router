@@ -1,7 +1,7 @@
-defmodule RssRouter.PocketPublisher do
+defmodule RssRouter.Router.PocketPublisher do
   @behaviour RssRouter.Publisher
 
-  @impl RssRouter.Publisher
+  @impl RssRouter.Router.Publisher
   def publish(title, uri) do
     client = %Pocketeer.Client{
       access_token: RssRouter.Config.pocket_access_token(),

@@ -1,4 +1,4 @@
-defmodule RssRouter.Supervisor do
+defmodule RssRouter.Router.Supervisor do
   use DynamicSupervisor
 
   def start_link(init_arg) do
@@ -16,16 +16,16 @@ defmodule RssRouter.Supervisor do
 
     get_initial_feeds()
     |> Enum.map(fn feed ->
-      {RssRouter.FeedService,
-       %RssRouter.RoutingRule{uri: feed, publisher: RssRouter.PocketPublisher}}
+      {RssRouter.Router.FeedService,
+       %RssRouter.Router.RoutingRule{uri: feed, publisher: RssRouter.Router.PocketPublisher}}
     end)
-    |> Enum.each(fn child -> DynamicSupervisor.start_child(RssRouter.Supervisor, child) end)
+    |> Enum.each(fn child -> DynamicSupervisor.start_child(Router.Supervisor, child) end)
   end
 
   defp get_initial_feeds() do
     RssRouter.Config.initial_feeds()
     |> String.split(" ")
-    |> Enum.concat(RssRouter.FeedStore.get_feeds())
+    |> Enum.concat(RssRouter.Router.FeedStore.get_feeds())
     |> Enum.reject(fn f -> String.length(f) == 0 end)
   end
 end

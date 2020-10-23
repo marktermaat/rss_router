@@ -1,4 +1,4 @@
-defmodule RssRouter.Router.FeedStore do
+defmodule RssRouter.FeedStore do
   @spec get_feeds() :: [String.t()]
   def get_feeds() do
     {:ok, table} = get_or_create_table!()

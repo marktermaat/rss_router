@@ -25,7 +25,7 @@ defmodule RssRouter.Router.Supervisor do
   defp get_initial_feeds() do
     RssRouter.Config.initial_feeds()
     |> String.split(" ")
-    |> Enum.concat(RssRouter.Router.FeedStore.get_feeds())
+    |> Enum.concat(RssRouter.FeedStore.get_feeds())
     |> Enum.reject(fn f -> String.length(f) == 0 end)
   end
 end

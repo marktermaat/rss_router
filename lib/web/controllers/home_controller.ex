@@ -1,7 +1,7 @@
 defmodule RssRouter.Web.HomeController do
-  use Phoenix.Controller, namespace: RssRouter.Web
+  use RssRouter.Web, :controller
 
   def index(conn, _params) do
-    Phoenix.Controller.html(conn, "RssRouter")
+    render(conn, "index.html")
   end
 end

@@ -28,7 +28,8 @@ defmodule RssRouter.MixProject do
       {:logger_file_backend, "~> 0.0.11"},
       {:jason, "~> 1.2.2"},
       {:phoenix, "~> 1.5"},
-      {:plug_cowboy, "~> 2.4"}
+      {:plug_cowboy, "~> 2.4"},
+      {:phoenix_html, "~> 2.14"}
     ]
   end
 end

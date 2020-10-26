@@ -1,1 +1,6 @@
-Home
+<h1>Feeds</h1>
+<ul>
+<%= for feed <- @feeds do %>
+  <li><%= feed %></li>
+<% end %>
+</ul>

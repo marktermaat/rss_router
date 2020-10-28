@@ -6,36 +6,35 @@ defmodule RssRouter.FeedStore do
     end)
   end
 
-  @spec insert_feed(Strint.t()) :: :ok
+  @spec insert_feed(String.t()) :: :ok
   def insert_feed(feed) do
     query(fn table ->
-      feeds = Enum.uniq(get_feeds(table) ++ [feed])
-      :ok = :dets.insert(table, {:feeds, feeds})
+      :ok = :dets.insert(table, {feed, :none})
+    end)
+  end
+
+  @spec insert_feed(String.t(), DateTime) :: :ok
+  def insert_feed(feed, timestamp) do
+    query(fn table ->
+      :ok = :dets.insert(table, {feed, timestamp})
     end)
   end
 
   @spec get_feed_latest_timestamp(String.t()) :: DateTime | :none
-  def get_feed_latest_timestamp(feed_title) do
+  def get_feed_latest_timestamp(feed) do
     query(fn table ->
-      result = :dets.lookup(table, feed_title)
+      result = :dets.lookup(table, feed)
 
       case result do
-        [{^feed_title, timestamp}] -> timestamp
+        [{^feed, timestamp}] -> timestamp
         [] -> :none
       end
     end)
   end
 
-  @spec set_feed_latest_timestamp(String.t(), DateTime) :: :ok
-  def set_feed_latest_timestamp(feed_title, timestamp) do
+  def delete_latest_timestamp(feed) do
     query(fn table ->
-      :ok = :dets.insert(table, {feed_title, timestamp})
-    end)
-  end
-
-  def delete_latest_timestamp(feed_title) do
-    query(fn table ->
-      :ok = :dets.delete(table, feed_title)
+      :ok = :dets.delete(table, feed)
     end)
   end
 
@@ -43,14 +42,17 @@ defmodule RssRouter.FeedStore do
   def get_all_latest_entries() do
     query(fn table ->
       :dets.foldl(fn x, res -> res ++ [x] end, [], table)
-      |> Enum.reject(fn {x, _} -> x == :feeds end)
     end)
+  end
+
+  def table_name do
+    "feed_db"
   end
 
   defp query(fun) do
     File.mkdir_p(RssRouter.Config.data_path())
-    dets_file = to_charlist(RssRouter.Config.data_path()) ++ '/feed_data'
-    {:ok, table} = :dets.open_file(dets_file, access: :read_write, type: :set)
+    dets_file = RssRouter.Config.data_path() <> "/" <> table_name
+    {:ok, table} = :dets.open_file(to_charlist(dets_file), access: :read_write, type: :set)
 
     try do
       fun.(table)
@@ -60,11 +62,6 @@ defmodule RssRouter.FeedStore do
   end
 
   defp get_feeds(table) do
-    result = :dets.lookup(table, :feeds)
-
-    case result do
-      [feeds: feeds] -> feeds
-      [] -> []
-    end
+    :dets.foldl(fn {feed, _}, res -> res ++ [feed] end, [], table)
   end
 end

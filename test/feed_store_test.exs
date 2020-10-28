@@ -5,10 +5,10 @@ defmodule FeedStoreTest do
   setup do
     data_path = "./test"
     System.put_env("DATA_PATH", data_path)
-    File.rm(data_path <> "/feed_data")
+    File.rm(data_path <> "/" <> table_name())
 
     on_exit(fn ->
-      File.rm(data_path <> "/feed_data")
+      File.rm(data_path <> "/" <> table_name())
     end)
 
     :ok
@@ -29,15 +29,15 @@ defmodule FeedStoreTest do
 
   test "Inserted latest entry timestamps are stored" do
     {:ok, timestamp, 0} = DateTime.from_iso8601("2015-01-23T23:50:07Z")
-    assert set_feed_latest_timestamp("new_feed1", timestamp) == :ok
+    assert insert_feed("new_feed1", timestamp) == :ok
     assert get_feed_latest_timestamp("new_feed1") == timestamp
   end
 
   test "Inserting latest entry timestamps overrides previous values" do
     {:ok, timestamp_old, 0} = DateTime.from_iso8601("2015-01-23T23:50:07Z")
-    assert set_feed_latest_timestamp("new_feed1", timestamp_old) == :ok
+    assert insert_feed("new_feed1", timestamp_old) == :ok
     {:ok, timestamp_new, 0} = DateTime.from_iso8601("2016-01-23T23:50:07Z")
-    assert set_feed_latest_timestamp("new_feed1", timestamp_new) == :ok
+    assert insert_feed("new_feed1", timestamp_new) == :ok
 
     assert get_feed_latest_timestamp("new_feed1") == timestamp_new
   end
@@ -48,7 +48,7 @@ defmodule FeedStoreTest do
 
   test "Requesting all entries returns stored entries" do
     {:ok, timestamp, 0} = DateTime.from_iso8601("2015-01-23T23:50:07Z")
-    assert set_feed_latest_timestamp("new_feed1", timestamp) == :ok
+    assert insert_feed("new_feed1", timestamp) == :ok
 
     assert get_all_latest_entries() == [{"new_feed1", timestamp}]
   end

@@ -1,6 +1,37 @@
-<h1>Feeds</h1>
-<ul>
-<%= for feed <- @feeds do %>
-  <li><%= feed %></li>
-<% end %>
-</ul>
+<style>
+  table {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    border-collapse: collapse;
+    width: 50%;
+  }
+
+  table td, table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  table tr:nth-child(even){background-color: #f2f2f2;}
+
+  table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+  }
+</style>
+
+<table>
+  <tr>
+    <th>Feed</th>
+    <th>Latest entry</th>
+  </tr>
+
+  <%= for {title, timestamp} <- @latest_entries do %>
+  <tr>
+    <td><%= title %></td>
+    <td><%= timestamp_to_string(timestamp)%></td>
+  </tr>
+  <% end %>
+</table>

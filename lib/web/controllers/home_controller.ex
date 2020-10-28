@@ -3,6 +3,7 @@ defmodule RssRouter.Web.HomeController do
 
   def index(conn, _params) do
     feeds = RssRouter.FeedStore.get_feeds()
-    render(conn, "index.html", feeds: feeds)
+    latest_entries = RssRouter.FeedStore.get_all_latest_entries()
+    render(conn, "index.html", feeds: feeds, latest_entries: latest_entries)
   end
 end

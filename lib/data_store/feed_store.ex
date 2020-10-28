@@ -59,6 +59,18 @@ defmodule RssRouter.FeedStore do
     end
   end
 
+  @spec get_all_latest_entries() :: [{String.t(), DateTime}]
+  def get_all_latest_entries() do
+    {:ok, table} = get_or_create_table!()
+
+    try do
+      :dets.foldl(fn x, res -> res ++ [x] end, [], table)
+      |> Enum.reject(fn {x, _} -> x == :feeds end)
+    after
+      close(table)
+    end
+  end
+
   defp get_feeds(table) do
     result = :dets.lookup(table, :feeds)
 

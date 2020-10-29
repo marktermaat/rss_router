@@ -5,6 +5,7 @@ defmodule RssRouter.Router.FeedService do
 
   @impl true
   def init(rule) do
+    RssRouter.Router.ServicePids.set_service_pid(rule.uri, self())
     schedule_processing(3_000)
     {:ok, rule}
   end

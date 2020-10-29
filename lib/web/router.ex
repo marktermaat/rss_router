@@ -15,5 +15,6 @@ defmodule RssRouter.Web.Router do
     pipe_through(:browser)
 
     get("/", HomeController, :index)
+    post("/add_feed", HomeController, :add_feed)
   end
 end

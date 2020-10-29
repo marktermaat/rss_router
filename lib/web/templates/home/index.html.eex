@@ -35,3 +35,11 @@
   </tr>
   <% end %>
 </table>
+
+<br>
+
+<%= form_for @conn, "/add_feed", fn f -> %>
+  Add new feed
+  <%= text_input f, :feed, placeholder: "New feed URI" %>
+  <%= submit "Submit" %>
+<% end %>

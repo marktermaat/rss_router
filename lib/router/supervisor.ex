@@ -11,6 +11,15 @@ defmodule RssRouter.Router.Supervisor do
     sup
   end
 
+  def start_feed_processor(feed) do
+    rule = %RssRouter.Router.RoutingRule{uri: feed, publisher: RssRouter.Router.PocketPublisher}
+
+    DynamicSupervisor.start_child(
+      RssRouter.Router.Supervisor,
+      {RssRouter.Router.FeedService, rule}
+    )
+  end
+
   def start_initial_feeds() do
     IO.puts("Seeding initial feeds")
 

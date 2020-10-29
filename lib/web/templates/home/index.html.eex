@@ -33,7 +33,7 @@
   <tr>
     <td><%= url %></td>
     <td><%= timestamp_to_string(timestamp)%></td>
-    <td><a href="/delete/<%= Base.encode16(url) %>">Delete</a></td>
+    <td><a href="/delete/<%= Base.encode16(url) %>" onClick="return confirm('Are you sure?');">Delete</a></td>
   </tr>
   <% end %>
 </table>

@@ -26,12 +26,14 @@
   <tr>
     <th>Feed</th>
     <th>Latest entry</th>
+    <th></th>
   </tr>
 
-  <%= for {title, timestamp} <- @latest_entries do %>
+  <%= for {url, timestamp} <- @latest_entries do %>
   <tr>
-    <td><%= title %></td>
+    <td><%= url %></td>
     <td><%= timestamp_to_string(timestamp)%></td>
+    <td><a href="/delete/<%= Base.encode16(url) %>">Delete</a></td>
   </tr>
   <% end %>
 </table>
@@ -40,6 +42,6 @@
 
 <%= form_for @conn, "/add_feed", fn f -> %>
   Add new feed
-  <%= text_input f, :feed, placeholder: "New feed URI" %>
+  <%= text_input f, :feed, value: "", placeholder: "New feed URI" %>
   <%= submit "Submit" %>
 <% end %>

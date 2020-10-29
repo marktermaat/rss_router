@@ -11,24 +11,24 @@ defmodule RssRouter.Router.Supervisor do
     sup
   end
 
-  def start_feed_processor(feed) do
-    rule = %RssRouter.Router.RoutingRule{uri: feed, publisher: RssRouter.Router.PocketPublisher}
-
-    DynamicSupervisor.start_child(
-      RssRouter.Router.Supervisor,
-      {RssRouter.Router.FeedService, rule}
-    )
-  end
-
   def start_initial_feeds() do
     IO.puts("Seeding initial feeds")
 
     get_initial_feeds()
-    |> Enum.map(fn feed ->
+    |> Enum.each(&start_feed_service/1)
+  end
+
+  def start_feed_service(uri) do
+    child_spec =
       {RssRouter.Router.FeedService,
-       %RssRouter.Router.RoutingRule{uri: feed, publisher: RssRouter.Router.PocketPublisher}}
-    end)
-    |> Enum.each(fn child -> DynamicSupervisor.start_child(RssRouter.Router.Supervisor, child) end)
+       %RssRouter.Router.RoutingRule{uri: uri, publisher: RssRouter.Router.PocketPublisher}}
+
+    {:ok, child_pid} = DynamicSupervisor.start_child(RssRouter.Router.Supervisor, child_spec)
+  end
+
+  def stop_feed_service(uri) do
+    pid = RssRouter.Router.ServicePids.get_pid(uri)
+    :ok = DynamicSupervisor.terminate_child(RssRouter.Router.Supervisor, pid)
   end
 
   defp get_initial_feeds() do

@@ -32,7 +32,7 @@ defmodule RssRouter.FeedStore do
     end)
   end
 
-  def delete_latest_timestamp(feed) do
+  def delete_feed(feed) do
     query(fn table ->
       :ok = :dets.delete(table, feed)
     end)

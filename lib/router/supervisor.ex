@@ -23,7 +23,7 @@ defmodule RssRouter.Router.Supervisor do
       {RssRouter.Router.FeedService,
        %RssRouter.Router.RoutingRule{uri: uri, publisher: RssRouter.Router.PocketPublisher}}
 
-    {:ok, child_pid} = DynamicSupervisor.start_child(RssRouter.Router.Supervisor, child_spec)
+    DynamicSupervisor.start_child(RssRouter.Router.Supervisor, child_spec)
   end
 
   def stop_feed_service(uri) do

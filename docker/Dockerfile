@@ -22,9 +22,7 @@ FROM alpine:3
 RUN apk add --no-cache --update bash openssl
 
 # Set environment variables and expose ports
-# EXPOSE 4000
-# ENV REPLACE_OS_VARS=true \
-#   PORT=4000
+EXPOSE 4000
 
 # Set the working dir
 WORKDIR /app

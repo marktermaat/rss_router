@@ -33,3 +33,4 @@ rss_router-*.tar
 /data
 /config/*.secret.exs
 /log
+/docker-compose.yml

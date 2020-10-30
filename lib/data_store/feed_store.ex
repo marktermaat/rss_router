@@ -51,7 +51,7 @@ defmodule RssRouter.FeedStore do
 
   defp query(fun) do
     File.mkdir_p(RssRouter.Config.data_path())
-    dets_file = RssRouter.Config.data_path() <> "/" <> table_name
+    dets_file = RssRouter.Config.data_path() <> "/" <> table_name()
     {:ok, table} = :dets.open_file(to_charlist(dets_file), access: :read_write, type: :set)
 
     try do

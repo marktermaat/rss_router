@@ -8,6 +8,8 @@ services:
     volumes:
       - "./log:/log"
       - "./data:/data"
+    ports:
+      - "4000:4000"
     restart: always
     environment:
       POCKET_CONSUMER_KEY: "KEY"
@@ -15,3 +17,9 @@ services:
       LOG_PATH: "/log"
       DATA_PATH: "/data"
       FEEDS: "https://feed1.com/rss https://feed2.com/rss"
+      RSS_ROUTER_HOST: "localhost"
+      RSS_ROUTER_PORT: 4000
+      RSS_ROUTER_SECRET_KEY_BASE: "verysecretkey"
+      RSS_ROUTER_SIGNING_SALT: "verysecretsalt"
+      RSS_ROUTER_USERNAME: "admin"
+      RSS_ROUTER_PASSWORD: "secret"

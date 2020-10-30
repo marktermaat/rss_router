@@ -19,7 +19,7 @@ config :rss_router, :pocket_access_token, :empty
 config :phoenix, :json_library, Jason
 
 config :rss_router, RssRouter.Web.Endpoint,
-  url: [host: "localhost"],
+  url: [host: "localhost", path: "/rss"],
   http: [port: 4000],
   secret_key_base: 'to_override_in_prod'
 

@@ -11,7 +11,7 @@ defmodule RssRouter.Web.Router do
     plug(:put_secure_browser_headers)
   end
 
-  scope "/", RssRouter.Web do
+  scope "/rss", RssRouter.Web do
     pipe_through(:browser)
 
     get("/", HomeController, :index)

@@ -18,7 +18,6 @@ services:
       DATA_PATH: "/data"
       FEEDS: "https://feed1.com/rss https://feed2.com/rss"
       RSS_ROUTER_HOST: "localhost"
-      RSS_ROUTER_BASE_PATH: "/"
       RSS_ROUTER_SECRET_KEY_BASE: "verysecretkey"
       RSS_ROUTER_SIGNING_SALT: "verysecretsalt"
       RSS_ROUTER_USERNAME: "admin"

@@ -5,8 +5,8 @@ defmodule RssRouter.ErrorView do
     "Unauthorized"
   end
 
-  def render("404.html", _assigns) do
-    "Not Found"
+  def render("404.html", assigns) do
+    assigns.reason.message
   end
 
   def render("500.html", _assigns) do

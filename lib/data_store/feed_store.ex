@@ -9,7 +9,7 @@ defmodule RssRouter.FeedStore do
   @spec insert_feed(String.t()) :: :ok
   def insert_feed(feed) do
     query(fn table ->
-      :ok = :dets.insert(table, {feed, :none})
+      :dets.insert_new(table, {feed, :none})
     end)
   end
 

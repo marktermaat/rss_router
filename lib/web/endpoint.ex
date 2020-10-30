@@ -8,9 +8,12 @@ defmodule RssRouter.Web.Endpoint do
     signing_salt: System.get_env("RSS_ROUTER_SIGNING_SALT") || "wJ2D06w5"
   ]
 
+  username = System.get_env("RSS_ROUTER_USERNAME") || "admin"
+  password = System.get_env("RSS_ROUTER_PASSWORD") || "secret"
+
   plug(:basic_auth,
-    username: System.get_env("RSS_ROUTER_USERNAME") || "admin",
-    password: System.get_env("RSS_ROUTER_PASSWORD") || "secret"
+    username: username,
+    password: password
   )
 
   plug(Plug.Parsers, parsers: [:urlencoded])

@@ -14,6 +14,8 @@ config :logger, :error_log,
 config :rss_router, :data_path, "./data"
 config :rss_router, :pocket_consumer_key, :empty
 config :rss_router, :pocket_access_token, :empty
+config :rss_router, :username, "admin"
+config :rss_router, :password, "secret"
 
 # Phoenix
 config :phoenix, :json_library, Jason

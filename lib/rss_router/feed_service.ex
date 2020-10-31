@@ -1,11 +1,11 @@
-defmodule RssRouter.Router.FeedService do
+defmodule RssRouter.FeedService do
   use GenServer
 
   @ten_minutes 600_000
 
   @impl true
   def init(rule) do
-    RssRouter.Router.ServicePids.set_service_pid(rule.uri, self())
+    RssRouter.ServicePids.set_service_pid(rule.uri, self())
     schedule_processing(3_000)
     {:ok, rule}
   end
@@ -25,7 +25,7 @@ defmodule RssRouter.Router.FeedService do
   end
 
   defp process_feed(rule) do
-    RssRouter.Router.FeedProcessor.process_feed(rule)
+    RssRouter.FeedProcessor.process_feed(rule)
 
     schedule_processing()
   end

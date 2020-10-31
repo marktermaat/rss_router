@@ -1,6 +1,6 @@
-defmodule RssRouter.Router.FeedProcessor do
+defmodule RssRouter.FeedProcessor do
   def process_feed(rule) do
-    feed = RssRouter.Router.FeedReader.read_feed(rule.uri)
+    feed = RssRouter.FeedReader.read_feed(rule.uri)
 
     process_new_feeds(feed, rule)
 

@@ -1,7 +1,7 @@
-defmodule RssRouter.Router.RoutingRule do
+defmodule RssRouter.RoutingRule do
   @type t :: %__MODULE__{
           uri: String.t(),
-          publisher: RssRouter.Router.Publisher
+          publisher: RssRouter.Publisher
         }
 
   @enforce_keys [:uri, :publisher]

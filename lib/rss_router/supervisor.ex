@@ -1,4 +1,4 @@
-defmodule RssRouter.Router.Supervisor do
+defmodule RssRouter.Supervisor do
   use DynamicSupervisor
 
   def start_link(init_arg) do
@@ -20,15 +20,15 @@ defmodule RssRouter.Router.Supervisor do
 
   def start_feed_service(uri) do
     child_spec =
-      {RssRouter.Router.FeedService,
-       %RssRouter.Router.RoutingRule{uri: uri, publisher: RssRouter.Router.PocketPublisher}}
+      {RssRouter.FeedService,
+       %RssRouter.RoutingRule{uri: uri, publisher: RssRouter.PocketPublisher}}
 
-    DynamicSupervisor.start_child(RssRouter.Router.Supervisor, child_spec)
+    DynamicSupervisor.start_child(RssRouter.Supervisor, child_spec)
   end
 
   def stop_feed_service(uri) do
-    pid = RssRouter.Router.ServicePids.get_pid(uri)
-    :ok = DynamicSupervisor.terminate_child(RssRouter.Router.Supervisor, pid)
+    pid = RssRouter.ServicePids.get_pid(uri)
+    :ok = DynamicSupervisor.terminate_child(RssRouter.Supervisor, pid)
   end
 
   defp get_initial_feeds() do

@@ -1,4 +1,4 @@
-defmodule RssRouter.Router.ServicePids do
+defmodule RssRouter.ServicePids do
   use Agent
 
   def start_link(_) do

@@ -1,6 +1,6 @@
 import Config
 
-config :rss_router, RssRouter.Web.Endpoint,
+config :rss_router, RssRouterWeb.Endpoint,
   url: [
     host: System.fetch_env!("RSS_ROUTER_HOST")
   ],

@@ -1,5 +1,5 @@
-defmodule RssRouter.ErrorView do
-  use RssRouter.Web, :view
+defmodule RssRouterWeb.ErrorView do
+  use RssRouterWeb, :view
 
   def render("403.html", _assigns) do
     "Unauthorized"

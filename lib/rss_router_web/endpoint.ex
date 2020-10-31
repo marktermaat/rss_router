@@ -1,4 +1,4 @@
-defmodule RssRouter.Web.Endpoint do
+defmodule RssRouterWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :rss_router
   import Plug.BasicAuth
 
@@ -15,5 +15,5 @@ defmodule RssRouter.Web.Endpoint do
 
   plug(Plug.Parsers, parsers: [:urlencoded])
   plug(Plug.Session, @session_options)
-  plug(RssRouter.Web.Router)
+  plug(RssRouterWeb.Router)
 end

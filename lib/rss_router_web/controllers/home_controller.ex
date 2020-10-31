@@ -1,5 +1,5 @@
-defmodule RssRouter.Web.HomeController do
-  use RssRouter.Web, :controller
+defmodule RssRouterWeb.HomeController do
+  use RssRouterWeb, :controller
 
   def index(conn, _params) do
     feeds = RssRouter.FeedStore.get_feeds()

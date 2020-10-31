@@ -33,7 +33,6 @@
   <tr>
     <td><%= url %></td>
     <td><%= timestamp_to_string(timestamp)%></td>
-    <%# <td><a href="/rss/delete/<%= Base.encode16(url) %>" onClick="return confirm('Are you sure?');">Delete</a></td> %>
     <td><a href=<%= Routes.home_path(@conn, :delete, Base.encode16(url)) %> onClick="return confirm('Are you sure?');">Delete</a></td>
   </tr>
   <% end %>

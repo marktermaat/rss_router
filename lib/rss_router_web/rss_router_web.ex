@@ -1,20 +1,20 @@
-defmodule RssRouter.Web do
+defmodule RssRouterWeb do
   def controller do
     quote do
-      use Phoenix.Controller, namespace: RssRouter.Web
-      alias RssRouter.Web.Router.Helpers, as: Routes
+      use Phoenix.Controller, namespace: RssRouterWeb
+      alias RssRouterWeb.Router.Helpers, as: Routes
     end
   end
 
   def view do
     quote do
       use Phoenix.View,
-        root: "lib/web/templates",
-        namespace: RssRouter.Web
+        root: "lib/rss_router_web/templates",
+        namespace: RssRouterWeb
 
       use Phoenix.HTML
       import Phoenix.View
-      alias RssRouter.Web.Router.Helpers, as: Routes
+      alias RssRouterWeb.Router.Helpers, as: Routes
     end
   end
 

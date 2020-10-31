@@ -1,4 +1,4 @@
-defmodule RssRouter.Web.Router do
+defmodule RssRouterWeb.Router do
   use Phoenix.Router
   import Plug.Conn
   import Phoenix.Controller
@@ -11,7 +11,7 @@ defmodule RssRouter.Web.Router do
     plug(:put_secure_browser_headers)
   end
 
-  scope "/rss", RssRouter.Web do
+  scope "/rss", RssRouterWeb do
     pipe_through(:browser)
 
     get("/", HomeController, :index)

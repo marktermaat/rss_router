@@ -5,7 +5,7 @@ defmodule RssRouter do
     children = [
       RssRouter.ServicePids,
       RssRouter.Supervisor,
-      RssRouter.Web.Endpoint,
+      RssRouterWeb.Endpoint,
       {Task, &RssRouter.Supervisor.start_initial_feeds/0}
     ]
 

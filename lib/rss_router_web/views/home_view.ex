@@ -1,5 +1,5 @@
-defmodule RssRouter.Web.HomeView do
-  use RssRouter.Web, :view
+defmodule RssRouterWeb.HomeView do
+  use RssRouterWeb, :view
 
   def timestamp_to_string(:none) do
     "-"

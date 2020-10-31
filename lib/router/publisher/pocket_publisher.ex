@@ -1,5 +1,5 @@
 defmodule RssRouter.Router.PocketPublisher do
-  @behaviour RssRouter.Publisher
+  @behaviour RssRouter.Router.Publisher
 
   @impl RssRouter.Router.Publisher
   def publish(title, uri) do

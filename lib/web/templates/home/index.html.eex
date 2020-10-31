@@ -33,14 +33,15 @@
   <tr>
     <td><%= url %></td>
     <td><%= timestamp_to_string(timestamp)%></td>
-    <td><a href="/rss/delete/<%= Base.encode16(url) %>" onClick="return confirm('Are you sure?');">Delete</a></td>
+    <%# <td><a href="/rss/delete/<%= Base.encode16(url) %>" onClick="return confirm('Are you sure?');">Delete</a></td> %>
+    <td><a href=<%= Routes.home_path(@conn, :delete, Base.encode16(url)) %> onClick="return confirm('Are you sure?');">Delete</a></td>
   </tr>
   <% end %>
 </table>
 
 <br>
 
-<%= form_for @conn, "/rss/add_feed", fn f -> %>
+<%= form_for @conn, Routes.home_path(@conn, :add_feed), fn f -> %>
   Add new feed
   <%= text_input f, :feed, value: "", placeholder: "New feed URI" %>
   <%= submit "Submit" %>

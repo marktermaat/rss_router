@@ -21,7 +21,7 @@ config :rss_router, :password, "secret"
 config :phoenix, :json_library, Jason
 
 config :rss_router, RssRouter.Web.Endpoint,
-  url: [host: "localhost", path: "/rss"],
+  url: [host: "localhost"],
   http: [port: 4000],
   secret_key_base: 'to_override_in_prod'
 

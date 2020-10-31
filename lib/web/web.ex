@@ -2,6 +2,7 @@ defmodule RssRouter.Web do
   def controller do
     quote do
       use Phoenix.Controller, namespace: RssRouter.Web
+      alias RssRouter.Web.Router.Helpers, as: Routes
     end
   end
 
@@ -13,6 +14,7 @@ defmodule RssRouter.Web do
 
       use Phoenix.HTML
       import Phoenix.View
+      alias RssRouter.Web.Router.Helpers, as: Routes
     end
   end
 

@@ -26,4 +26,5 @@ config :rss_router, RssRouterWeb.Endpoint,
   secret_key_base: 'to_override_in_prod'
 
 # Import local secrets
+import_config "#{Mix.env()}.exs"
 import_config "#{Mix.env()}.secret.exs"

@@ -1,28 +1,25 @@
-defmodule RssRouter.FeedStore do
+defmodule RssRouter.FeedData.FeedStore do
   @data_path Application.fetch_env!(:rss_router, :data_path)
 
-  @spec get_feeds() :: [String.t()]
   def get_feeds() do
     query(fn table ->
       get_feeds(table)
     end)
   end
 
-  @spec insert_feed(String.t()) :: :ok
   def insert_feed(feed) do
     query(fn table ->
       :dets.insert_new(table, {feed, :none})
+      :ok
     end)
   end
 
-  @spec insert_feed(String.t(), DateTime) :: :ok
   def insert_feed(feed, timestamp) do
     query(fn table ->
       :ok = :dets.insert(table, {feed, timestamp})
     end)
   end
 
-  @spec get_feed_latest_timestamp(String.t()) :: DateTime | :none
   def get_feed_latest_timestamp(feed) do
     query(fn table ->
       result = :dets.lookup(table, feed)
@@ -40,7 +37,6 @@ defmodule RssRouter.FeedStore do
     end)
   end
 
-  @spec get_all_latest_entries() :: [{String.t(), DateTime}]
   def get_all_latest_entries() do
     query(fn table ->
       :dets.foldl(fn x, res -> res ++ [x] end, [], table)

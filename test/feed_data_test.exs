@@ -1,14 +1,14 @@
-defmodule FeedStoreTest do
+defmodule FeedDataTest do
   use ExUnit.Case
-  import RssRouter.FeedStore
+  import RssRouter.FeedData
+
+  @table_file "./test/feed_db"
 
   setup do
-    data_path = "./test"
-    System.put_env("DATA_PATH", data_path)
-    File.rm(data_path <> "/" <> table_name())
+    File.rm(@table_file)
 
     on_exit(fn ->
-      File.rm(data_path <> "/" <> table_name())
+      File.rm(@table_file)
     end)
 
     :ok

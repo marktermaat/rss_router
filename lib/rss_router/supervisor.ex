@@ -34,14 +34,14 @@ defmodule RssRouter.Supervisor do
   defp get_initial_feeds() do
     store_initial_feeds()
 
-    RssRouter.FeedStore.get_feeds()
+    RssRouter.FeedData.get_feeds()
   end
 
   defp store_initial_feeds() do
     initial_feeds()
     |> String.split(" ")
     |> Enum.reject(fn f -> String.length(f) == 0 end)
-    |> Enum.each(&RssRouter.FeedStore.insert_feed/1)
+    |> Enum.each(&RssRouter.FeedData.insert_feed/1)
   end
 
   defp initial_feeds() do

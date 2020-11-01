@@ -38,9 +38,13 @@ defmodule RssRouter.Supervisor do
   end
 
   defp store_initial_feeds() do
-    RssRouter.Config.initial_feeds()
+    initial_feeds()
     |> String.split(" ")
     |> Enum.reject(fn f -> String.length(f) == 0 end)
     |> Enum.each(&RssRouter.FeedStore.insert_feed/1)
+  end
+
+  defp initial_feeds() do
+    System.get_env("FEEDS") || ""
   end
 end

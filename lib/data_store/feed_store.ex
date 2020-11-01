@@ -1,4 +1,6 @@
 defmodule RssRouter.FeedStore do
+  @data_path Application.fetch_env!(:rss_router, :data_path)
+
   @spec get_feeds() :: [String.t()]
   def get_feeds() do
     query(fn table ->
@@ -50,8 +52,8 @@ defmodule RssRouter.FeedStore do
   end
 
   defp query(fun) do
-    File.mkdir_p(RssRouter.Config.data_path())
-    dets_file = RssRouter.Config.data_path() <> "/" <> table_name()
+    File.mkdir_p(@data_path)
+    dets_file = @data_path <> "/" <> table_name()
     {:ok, table} = :dets.open_file(to_charlist(dets_file), access: :read_write, type: :set)
 
     try do

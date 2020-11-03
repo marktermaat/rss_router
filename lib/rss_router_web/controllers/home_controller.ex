@@ -10,7 +10,7 @@ defmodule RssRouterWeb.HomeController do
   def add_feed(conn, params) do
     {:ok, feed} = Map.fetch(params, "feed")
     RssRouter.FeedData.insert_feed(feed)
-    RssRouter.Supervisor.start_feed_service(feed)
+    RssRouter.Router.start_feed_service(feed)
     redirect(conn, to: Routes.home_path(conn, :index))
   end
 
@@ -18,7 +18,7 @@ defmodule RssRouterWeb.HomeController do
     {:ok, feed_encoded} = Map.fetch(params, "feed")
     {:ok, feed} = Base.decode16(feed_encoded)
     RssRouter.FeedData.delete_feed(feed)
-    RssRouter.Supervisor.stop_feed_service(feed)
+    RssRouter.Router.stop_feed_service(feed)
     redirect(conn, to: Routes.home_path(conn, :index))
   end
 end

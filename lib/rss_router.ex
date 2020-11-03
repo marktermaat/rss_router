@@ -3,10 +3,8 @@ defmodule RssRouter do
 
   def start(_type, _args) do
     children = [
-      RssRouter.ServicePids,
-      RssRouter.Supervisor,
-      RssRouterWeb.Endpoint,
-      {Task, &RssRouter.Supervisor.start_initial_feeds/0}
+      RssRouter.Router,
+      RssRouterWeb.Endpoint
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one)

@@ -1,10 +1,10 @@
-defmodule RssRouter.PocketPublisher do
-  @behaviour RssRouter.Publisher
+defmodule RssRouter.Router.Publisher.PocketPublisher do
+  @behaviour RssRouter.Router.Publisher
 
   @pocket_consumer_key Application.fetch_env!(:rss_router, :pocket_consumer_key)
   @pocket_access_token Application.fetch_env!(:rss_router, :pocket_access_token)
 
-  @impl RssRouter.Publisher
+  @impl RssRouter.Router.Publisher
   def publish(title, uri) do
     client = %Pocketeer.Client{
       consumer_key: @pocket_consumer_key,

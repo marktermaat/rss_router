@@ -1,6 +1,9 @@
-defmodule RssRouter.FeedProcessor do
+defmodule RssRouter.Router.FeedService.FeedProcessor do
+  alias RssRouter.Router.FeedService.FeedReader
+  alias RssRouter.FeedData
+
   def process_feed(rule) do
-    feed = RssRouter.FeedReader.read_feed(rule.uri)
+    feed = FeedReader.read_feed(rule.uri)
 
     process_new_feeds(feed, rule)
 
@@ -8,7 +11,7 @@ defmodule RssRouter.FeedProcessor do
   end
 
   defp process_new_feeds(feed, rule) do
-    latest_timestamp = RssRouter.FeedData.get_feed_latest_timestamp(rule.uri)
+    latest_timestamp = FeedData.get_feed_latest_timestamp(rule.uri)
 
     feed.entries
     |> Enum.filter(fn e -> feed_entry_is_new(latest_timestamp, e.updated) end)
@@ -18,7 +21,7 @@ defmodule RssRouter.FeedProcessor do
   defp update_latest_timestamp(feed, rule) do
     case Enum.fetch(feed.entries, -1) do
       {:ok, last_entry} ->
-        RssRouter.FeedData.insert_feed(rule.uri, last_entry.updated)
+        FeedData.insert_feed(rule.uri, last_entry.updated)
     end
   end
 

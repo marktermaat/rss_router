@@ -22,7 +22,10 @@ defmodule RssRouter.Router.Supervisor do
 
   def stop_feed_service(uri) do
     pid = PidsService.get_pid(uri)
-    :ok = DynamicSupervisor.terminate_child(RssRouter.Router.DynamicSupervisor, pid)
+
+    unless pid == nil do
+      :ok = DynamicSupervisor.terminate_child(RssRouter.Router.DynamicSupervisor, pid)
+    end
   end
 
   defp store_initial_feeds() do

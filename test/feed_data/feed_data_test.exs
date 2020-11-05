@@ -1,4 +1,4 @@
-defmodule FeedDataTest do
+defmodule FeedData.FeedDataTest do
   use ExUnit.Case
   import RssRouter.FeedData
 

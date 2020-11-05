@@ -11,6 +11,7 @@ config :logger, :error_log,
   path: "#{System.get_env("LOG_PATH") || "log"}/error.log"
 
 # RssRouter
+config :rss_router, http_adapter: HTTPoison
 config :rss_router, :data_path, "./data"
 config :rss_router, :pocket_consumer_key, :empty
 config :rss_router, :pocket_access_token, :empty

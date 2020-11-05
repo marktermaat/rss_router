@@ -6,6 +6,7 @@ defmodule RssRouter.MixProject do
       app: :rss_router,
       version: "0.1.0",
       elixir: "~> 1.10",
+      elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       deps: deps()
@@ -33,4 +34,7 @@ defmodule RssRouter.MixProject do
       {:phoenix_html, "~> 2.14"}
     ]
   end
+
+  defp elixirc_paths(:test), do: ["lib", "test/shared"]
+  defp elixirc_paths(_), do: ["lib"]
 end

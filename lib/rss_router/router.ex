@@ -11,7 +11,8 @@ defmodule RssRouter.Router do
   def init(_init_arg) do
     children = [
       PidsService,
-      {DynamicSupervisor, strategy: :one_for_one, name: RssRouter.Router.DynamicSupervisor},
+      {DynamicSupervisor,
+       strategy: :one_for_one, name: RssRouter.Router.DynamicSupervisor, max_restarts: 100},
       {Task, &RssRouter.Router.Supervisor.start_initial_feeds/0}
     ]
 

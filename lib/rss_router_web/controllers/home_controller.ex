@@ -21,4 +21,9 @@ defmodule RssRouterWeb.HomeController do
     RssRouter.Router.stop_feed_service(feed)
     redirect(conn, to: Routes.home_path(conn, :index))
   end
+
+  def list_json(conn, _params) do
+    latest_entries = RssRouter.FeedData.get_all_latest_entries()
+    json(conn, latest_entries)
+  end
 end

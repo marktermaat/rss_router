@@ -17,5 +17,6 @@ defmodule RssRouterWeb.Router do
     get("/", HomeController, :index)
     post("/add_feed", HomeController, :add_feed)
     get("/delete/:feed", HomeController, :delete)
+    get("/json", HomeController, :list_json)
   end
 end

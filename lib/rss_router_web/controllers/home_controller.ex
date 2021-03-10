@@ -24,6 +24,6 @@ defmodule RssRouterWeb.HomeController do
 
   def list_json(conn, _params) do
     latest_entries = RssRouter.FeedData.get_all_latest_entries()
-    json(conn, latest_entries)
+    json(conn, Enum.into(latest_entries, %{}))
   end
 end

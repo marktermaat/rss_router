@@ -1,6 +1,4 @@
 defmodule RssRouter.FeedData.FeedStore do
-  @data_path Application.fetch_env!(:rss_router, :data_path)
-
   def get_feeds() do
     query(fn table ->
       get_feeds(table)
@@ -48,8 +46,8 @@ defmodule RssRouter.FeedData.FeedStore do
   end
 
   defp query(fun) do
-    File.mkdir_p(@data_path)
-    dets_file = @data_path <> "/" <> table_name()
+    File.mkdir_p(data_path())
+    dets_file = data_path() <> "/" <> table_name()
     {:ok, table} = :dets.open_file(to_charlist(dets_file), access: :read_write, type: :set)
 
     try do
@@ -61,5 +59,9 @@ defmodule RssRouter.FeedData.FeedStore do
 
   defp get_feeds(table) do
     :dets.foldl(fn {feed, _}, res -> res ++ [feed] end, [], table)
+  end
+
+  defp data_path() do
+    Application.fetch_env!(:rss_router, :data_path)
   end
 end

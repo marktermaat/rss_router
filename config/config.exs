@@ -17,6 +17,7 @@ config :rss_router, :pocket_consumer_key, :empty
 config :rss_router, :pocket_access_token, :empty
 config :rss_router, :username, "admin"
 config :rss_router, :password, "secret"
+config :rss_router, :api_token, "secret"
 
 # Phoenix
 config :phoenix, :json_library, Jason

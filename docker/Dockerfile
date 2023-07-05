@@ -16,10 +16,10 @@ RUN mix local.rebar --force && \
   mix release
 
 # ===== Deployment phase
-FROM alpine:3
+FROM alpine:3.16
 
 # Install bash and openssl
-RUN apk add --no-cache --update bash openssl
+RUN apk add --no-cache --update bash openssl libgcc libstdc++ ncurses-libs
 
 # Set environment variables and expose ports
 EXPOSE 4000

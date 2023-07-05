@@ -15,13 +15,20 @@ defmodule RssRouter.Router.FeedService.FeedProcessor do
 
     feed.entries
     |> Enum.filter(fn e -> feed_entry_is_new(latest_timestamp, e.updated) end)
-    |> Enum.each(fn entry -> process_feed_entry(feed, latest_timestamp, rule, entry) end)
+    |> Enum.each(fn entry -> process_feed_entry(latest_timestamp, rule, entry) end)
   end
 
   defp update_latest_timestamp(feed, rule) do
-    case Enum.fetch(feed.entries, -1) do
-      {:ok, last_entry} ->
-        FeedData.insert_feed(rule.uri, last_entry.updated)
+    latest_timestamp = FeedData.get_feed_latest_timestamp(rule.uri)
+
+    new_timestamp =
+      feed.entries
+      |> Enum.map(fn f -> f.updated end)
+      |> Enum.max_by(fn dt -> DateTime.to_unix(dt) end)
+
+    if DateTime.compare(new_timestamp, latest_timestamp) == :gt do
+      FeedData.insert_feed(rule.uri, new_timestamp)
+      IO.puts("New timestamp for #{rule.uri}: #{DateTime.to_string(new_timestamp)}")
     end
   end
 
@@ -33,9 +40,9 @@ defmodule RssRouter.Router.FeedService.FeedProcessor do
     DateTime.compare(feed_entry_timestamp, latest_timestamp) == :gt
   end
 
-  defp process_feed_entry(feed, latest_timestamp, rule, entry) do
+  defp process_feed_entry(latest_timestamp, rule, entry) do
     IO.puts(
-      "#{feed} / #{DateTime.to_string(entry.updated)} > #{DateTime.to_string(latest_timestamp)} / #{entry.title} / #{entry.url}"
+      "#{rule.uri} / #{DateTime.to_string(entry.updated)} > #{DateTime.to_string(latest_timestamp)} = #{DateTime.compare(entry.updated, latest_timestamp)} / #{entry.title} / #{entry.url}"
     )
 
     rule.publisher.publish(entry.title, entry.url)
